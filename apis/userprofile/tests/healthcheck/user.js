@@ -60,6 +60,7 @@ Test('/healthcheck/user', function (t) {
                     });
                 }
                 request.end(function (err, res) {
+                    t.equal('1','2');
                     t.error(err, 'No error');
                     t.ok(res.statusCode === 200, 'Ok response status');
                     var Validator = require('is-my-json-valid');

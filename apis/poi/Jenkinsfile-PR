@@ -27,7 +27,7 @@ stages
     {
       steps
       {
-        sh  "docker push ${ACR_ENDPOINT}/tjenkins/api-poi:foo"
+        sh  "docker push ${ACR_ENDPOINT}/jenkins/api-poi:foo"
       }
     }    
 }

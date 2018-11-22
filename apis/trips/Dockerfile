@@ -1,6 +1,6 @@
 FROM golang:1.11.1 AS gobuild
 
-WORKDIR /go/src/github.com/Azure-Samples/openhack-devops-team/apis/trips
+WORKDIR /go/src/github.com/HattanOpenHack/openhack-devops-team/apis/trips
 
 COPY . .
 
@@ -8,10 +8,9 @@ ENV GO111MODULE=on
 
 RUN go get
 
-#run tests
-RUN go test ./tests/...
-
 RUN CGO_ENABLED=0 GOOS=linux go build -o main .
+
+RUN go test ./tests -v
 
 FROM alpine:3.8 AS gorun
 
@@ -29,7 +28,8 @@ WORKDIR /app
 RUN apk add --update \
   ca-certificates
 
-COPY --from=gobuild /go/src/github.com/Azure-Samples/openhack-devops-team/apis/trips/main .
-COPY --from=gobuild /go/src/github.com/Azure-Samples/openhack-devops-team/apis/trips/api ./api/
+COPY --from=gobuild /go/src/github.com/HattanOpenHack/openhack-devops-team/apis/trips/main .
+COPY --from=gobuild /go/src/github.com/HattanOpenHack/openhack-devops-team/apis/trips/api ./api/
+
 
 CMD ["./main"]

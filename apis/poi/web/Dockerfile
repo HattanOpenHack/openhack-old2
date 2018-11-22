@@ -14,6 +14,7 @@ COPY ./appsettings.json /app/out/
 # unit test image
 FROM microsoft/dotnet:2.1-sdk AS test-env
 WORKDIR /app
+COPY . ./
 
 RUN dotnet restore tests/UnitTests/UnitTests.csproj 
 RUN dotnet test tests/UnitTests/UnitTests.csproj

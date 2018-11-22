@@ -1,0 +1,37 @@
+pipeline{
+      agent  { node { label 'master' } }
+      environment {
+        BUID_TAG = "userprofileci${env.BUILD_NUMBER}"
+      }
+stages
+{
+    stage('setup')
+    {
+      steps
+      {
+        withCredentials([[$class: 'UsernamePasswordMultiBinding',
+        credentialsId: 'acr-creds',
+        usernameVariable: 'ACR_USER',
+        passwordVariable: 'ACR_PASSWORD']])
+        {
+          sh  "docker login ${env.ACR_ENDPOINT} -u '${ACR_USER}' -p '${ACR_PASSWORD}'"
+        }   
+      }
+    }
+    stage('build')
+    {
+      steps
+      {
+        sh "docker build -t ${env.ACR_ENDPOINT}/jenkins/api-userprofile:${BUID_TAG} $WORKSPACE/apis/userprofile"
+      }
+    }
+    stage('push')
+    {
+      steps
+      {
+        sh  "docker push ${env.ACR_ENDPOINT}/jenkins/api-userprofile:${BUID_TAG}"
+      }
+    }    
+}
+
+}

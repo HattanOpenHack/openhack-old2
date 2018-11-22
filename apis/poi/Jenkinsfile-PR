@@ -5,33 +5,13 @@ pipeline{
       }
 stages
 {
-    stage('setup')
-    {
-      steps
-      {
-        withCredentials([[$class: 'UsernamePasswordMultiBinding',
-        credentialsId: 'acr-creds',
-        usernameVariable: 'ACR_USER',
-        passwordVariable: 'ACR_PASSWORD']])
-        {
-          sh  "docker login ${env.ACR_ENDPOINT} -u '${ACR_USER}' -p '${ACR_PASSWORD}'"
-        }   
-      }
-    }
     stage('build')
     {
       steps
       {
         sh "docker build -t ${env.ACR_ENDPOINT}/jenkins/api-poi:${BUID_TAG} $WORKSPACE/apis/poi/web"
       }
-    }
-    stage('push')
-    {
-      steps
-      {
-        sh  "docker push ${env.ACR_ENDPOINT}/jenkins/api-poi:${BUID_TAG}"
-      }
-    }    
+    } 
 }
 
 }

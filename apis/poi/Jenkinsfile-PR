@@ -7,16 +7,26 @@ stages
     {
         steps
         {
-            sh "ls" 
+            withCredentials([[$class: 'UsernamePasswordMultiBinding',
+            credentialsId: 'acr-creds',
+            usernameVariable: 'ACR_USER',
+            passwordVariable: 'ACR_PASSWORD']])
+            {
+                sh  "docker login ${ACR_ENDPOINT} -u '${ACR_USER}' -p '${ACR_PASSWORD}'"
+            }   
         }
     }
     stage('build')
     {
         steps
         {
-            sh "docker build -t hattan-poi $WORKSPACE/apis/poi/web"
+            sh "docker build -t ${ACR_ENDPOINT}/jenkins/api-poi:foo $WORKSPACE/apis/poi/web"
         }
     }
+        stage('push')
+        {
+            sh  "docker push ${ACR_ENDPOINT}/tjenkins/api-poi:foo"
+        }    
 }
 
 }

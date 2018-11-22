@@ -5,28 +5,31 @@ stages
 {
     stage('setup')
     {
-        steps
+      steps
+      {
+        withCredentials([[$class: 'UsernamePasswordMultiBinding',
+        credentialsId: 'acr-creds',
+        usernameVariable: 'ACR_USER',
+        passwordVariable: 'ACR_PASSWORD']])
         {
-            withCredentials([[$class: 'UsernamePasswordMultiBinding',
-            credentialsId: 'acr-creds',
-            usernameVariable: 'ACR_USER',
-            passwordVariable: 'ACR_PASSWORD']])
-            {
-                sh  "docker login ${ACR_ENDPOINT} -u '${ACR_USER}' -p '${ACR_PASSWORD}'"
-            }   
-        }
+          sh  "docker login ${ACR_ENDPOINT} -u '${ACR_USER}' -p '${ACR_PASSWORD}'"
+        }   
+      }
     }
     stage('build')
     {
-        steps
-        {
-            sh "docker build -t ${ACR_ENDPOINT}/jenkins/api-poi:foo $WORKSPACE/apis/poi/web"
-        }
+      steps
+      {
+        sh "docker build -t ${ACR_ENDPOINT}/jenkins/api-poi:foo $WORKSPACE/apis/poi/web"
+      }
     }
-        stage('push')
-        {
-            sh  "docker push ${ACR_ENDPOINT}/tjenkins/api-poi:foo"
-        }    
+    stage('push')
+    {
+      steps
+      {
+        sh  "docker push ${ACR_ENDPOINT}/tjenkins/api-poi:foo"
+      }
+    }    
 }
 
 }

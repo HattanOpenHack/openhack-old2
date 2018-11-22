@@ -14,7 +14,7 @@ stages
     {
         steps
         {
-            sh "pwd"
+            sh "docker build -t hattan-poi $WORKSPACE/apis/poi"
         }
     }
 }

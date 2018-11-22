@@ -1,0 +1,17 @@
+pipeline{
+      agent  { node { label 'master' } }
+      environment {
+        BUID_TAG = "tripspr${env.BUILD_NUMBER}"
+      }
+stages
+{
+    stage('build')
+    {
+      steps
+      {
+        sh "docker build -t ${env.ACR_ENDPOINT}/jenkins/api-user:${BUID_TAG} $WORKSPACE/apis/user-java"
+      }
+    } 
+}
+
+}

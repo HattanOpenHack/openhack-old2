@@ -1,6 +1,8 @@
 pipeline{
       agent  { node { label 'master' } }
-
+      environment {
+        BUID_TAG = "poipr" + ${env.BUILD_NUMBER}
+      }
 stages
 {
     stage('setup')
@@ -20,14 +22,14 @@ stages
     {
       steps
       {
-        sh "docker build -t ${ACR_ENDPOINT}/jenkins/api-poi:foo $WORKSPACE/apis/poi/web"
+        sh "docker build -t ${ACR_ENDPOINT}/jenkins/api-poi:${BUID_TAG} $WORKSPACE/apis/poi/web"
       }
     }
     stage('push')
     {
       steps
       {
-        sh  "docker push ${ACR_ENDPOINT}/jenkins/api-poi:foo"
+        sh  "docker push ${ACR_ENDPOINT}/jenkins/api-poi:${BUID_TAG}"
       }
     }    
 }

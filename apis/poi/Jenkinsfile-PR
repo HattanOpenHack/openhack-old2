@@ -1,7 +1,7 @@
 pipeline{
       agent  { node { label 'master' } }
       environment {
-        BUID_TAG = "poipr" + ${env.BUILD_NUMBER}
+        BUID_TAG = "poipr${env.BUILD_NUMBER}"
       }
 stages
 {

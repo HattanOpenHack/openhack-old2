@@ -5,11 +5,13 @@ WORKDIR /app
 COPY *.csproj ./
 RUN dotnet restore
 
+# copy everything else 
+COPY . ./
+
 # run unit test
 RUN dotnet test UnitTests/UnitTests.csproj
 
-# copy everything else and build
-COPY . ./
+# publish
 RUN dotnet publish -c Release -o out
 COPY ./appsettings.*.json /app/out/
 COPY ./appsettings.json /app/out/

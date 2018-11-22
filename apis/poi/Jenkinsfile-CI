@@ -39,7 +39,7 @@ post {
     echo 'Post Build Results'
     script {
       properties([[$class: 'GithubProjectProperty',
-                projectUrlStr: 'https://github.com/hattan/openhack-devops-team']])
+                projectUrlStr: 'https://github.com/HattanOpenHack/openhack-devops-team']])
     }
    step([$class: 'GitHubIssueNotifier',
         issueAppend: true,
@@ -47,5 +47,5 @@ post {
         issueTitle: '$JOB_NAME $BUILD_DISPLAY_NAME failed'])
         }
     }
-    
+
 }

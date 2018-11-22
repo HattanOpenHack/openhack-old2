@@ -1,0 +1,32 @@
+pipeline{
+      agent  { node { label 'master' } }
+
+stages
+{
+    stage('checkout')
+    {
+        steps
+        {
+            deleteDir()
+
+            echo "copying source from ${workspace}@script"
+            sh "cp -R  ${workspace}@script/* ."
+        }
+    }
+    stage('setup')
+    {
+        steps
+        {
+            echo "ACR Setup"    
+        }
+    }
+    stage('build')
+    {
+        steps
+        {
+            echo "build"
+        }
+    }
+}
+
+}

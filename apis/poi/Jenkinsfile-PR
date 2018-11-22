@@ -1,5 +1,4 @@
 pipeline{
-      agent  { node { label 'master' } }
 
 stages
 {
@@ -7,7 +6,7 @@ stages
     {
         steps
         {
-            deleteDir()
+
             checkout([$class: 'GitSCM', branches: [[name: '*/master']],
             userRemoteConfigs: [[url: 'https://github.com/HattanOpenHack/openhack-devops-team.git/']],credentialsId: 'hattan-pat'])
         }

@@ -13,5 +13,17 @@ stages
       }
     } 
 }
-
+post { 
+  always { 
+    echo 'Post Build Results'
+    script {
+      properties([[$class: 'GithubProjectProperty',
+                projectUrlStr: 'https://github.com/HattanOpenHack/openhack-devops-team']])
+    }
+   step([$class: 'GitHubIssueNotifier',
+        issueAppend: true,
+        issueLabel: '',
+        issueTitle: '$JOB_NAME $BUILD_DISPLAY_NAME failed'])
+        }
+    }
 }

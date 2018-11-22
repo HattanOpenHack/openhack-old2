@@ -1,15 +1,14 @@
 FROM microsoft/dotnet:2.1-sdk AS build-env
 WORKDIR /app
-COPY . ./
+#COPY . ./
 
 # copy csproj and restore as distinct layers
-#COPY web/*.csproj ./web
-#COPY tests/*.csproj /tests
+COPY **/*.csproj ./
 
 RUN dotnet restore
 
 # copy everything else 
-#COPY . ./
+COPY . ./
 
 # publish
 RUN dotnet publish -c Release -o out

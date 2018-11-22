@@ -2,19 +2,21 @@ FROM microsoft/dotnet:2.1-sdk AS build-env
 WORKDIR /app
 
 # copy csproj and restore as distinct layers
-COPY *.csproj ./
+COPY web/*.csproj ./web
+COPY tests/*.csproj /tests
+
 RUN dotnet restore
 
 # copy everything else 
 COPY . ./
 
 # run unit test
-RUN dotnet test UnitTests/UnitTests.csproj
+RUN dotnet test tests/UnitTests/UnitTests.csproj
 
 # publish
 RUN dotnet publish -c Release -o out
-COPY ./appsettings.*.json /app/out/
-COPY ./appsettings.json /app/out/
+COPY ./web/appsettings.*.json /app/out/
+COPY ./web/appsettings.json /app/out/
 
 
 # build runtime image

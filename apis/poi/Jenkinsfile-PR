@@ -14,7 +14,7 @@ stages
         usernameVariable: 'ACR_USER',
         passwordVariable: 'ACR_PASSWORD']])
         {
-          sh  "docker login ${ACR_ENDPOINT} -u '${ACR_USER}' -p '${ACR_PASSWORD}'"
+          sh  "docker login ${env.ACR_ENDPOINT} -u '${ACR_USER}' -p '${ACR_PASSWORD}'"
         }   
       }
     }
@@ -22,14 +22,14 @@ stages
     {
       steps
       {
-        sh "docker build -t ${ACR_ENDPOINT}/jenkins/api-poi:${BUID_TAG} $WORKSPACE/apis/poi/web"
+        sh "docker build -t ${env.ACR_ENDPOINT}/jenkins/api-poi:${BUID_TAG} $WORKSPACE/apis/poi/web"
       }
     }
     stage('push')
     {
       steps
       {
-        sh  "docker push ${ACR_ENDPOINT}/jenkins/api-poi:${BUID_TAG}"
+        sh  "docker push ${env.ACR_ENDPOINT}/jenkins/api-poi:${BUID_TAG}"
       }
     }    
 }

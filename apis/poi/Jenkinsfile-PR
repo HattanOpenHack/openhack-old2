@@ -7,7 +7,7 @@ stages
     {
         steps
         {
-
+          deleteDir()
            echo 'nothing'
         }
     }

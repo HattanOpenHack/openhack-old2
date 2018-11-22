@@ -8,9 +8,6 @@ stages
         steps
         {
             deleteDir()
-
-            echo "copying source from ${workspace}@script"
-            sh "cp -R  ${workspace}@script/* ."
         }
     }
     stage('setup')

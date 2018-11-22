@@ -8,8 +8,7 @@ stages
         steps
         {
 
-            checkout([$class: 'GitSCM', branches: [[name: '*/master']],
-            userRemoteConfigs: [[url: 'https://github.com/HattanOpenHack/openhack-devops-team.git/']],credentialsId: 'hattan-pat'])
+           echo 'nothing'
         }
     }
     stage('setup')

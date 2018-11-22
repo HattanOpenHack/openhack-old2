@@ -16,14 +16,14 @@ stages
     {
         steps
         {
-            echo "ACR Setup"    
+            sh "ls" 
         }
     }
     stage('build')
     {
         steps
         {
-            echo "build"
+            sh "pwd"
         }
     }
 }

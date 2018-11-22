@@ -3,15 +3,6 @@ pipeline{
 
 stages
 {
-    stage('clone')
-    {
-        steps
-        {
-            deleteDir()
-            checkout([$class: 'GitSCM', branches: [[name: '*/master']],
-            userRemoteConfigs: [[url: 'https://github.com/HattanOpenHack/openhack-devops-team.git/']],credentialsId: 'hattan-pat'])
-        }
-    }
     stage('setup')
     {
         steps

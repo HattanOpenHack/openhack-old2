@@ -8,6 +8,9 @@ ENV GO111MODULE=on
 
 RUN go get
 
+#run tests
+RUN go test tests/...
+
 RUN CGO_ENABLED=0 GOOS=linux go build -o main .
 
 FROM alpine:3.8 AS gorun

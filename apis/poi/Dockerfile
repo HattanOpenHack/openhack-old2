@@ -9,12 +9,12 @@ RUN dotnet restore
 COPY . ./
 
 # run unit test
-RUN dotnet test tests/UnitTests/UnitTests.csproj
+RUN dotnet test UnitTests/UnitTests.csproj
 
 # publish
-RUN dotnet publish web/ -c Release -o out
-COPY ./web/appsettings.*.json /app/out/
-COPY ./web/appsettings.json /app/out/
+RUN dotnet publish -c Release -o out
+COPY ./appsettings.*.json /app/out/
+COPY ./appsettings.json /app/out/
 
 
 # build runtime image

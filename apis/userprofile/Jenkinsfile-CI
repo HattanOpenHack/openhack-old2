@@ -31,7 +31,16 @@ stages
       {
         sh  "docker push ${env.ACR_ENDPOINT}/jenkins/api-userprofile:${BUID_TAG}"
       }
-    }    
+    }  
+    stage('Helm Install'){
+      steps{
+        sh "export KUBECONFIG=/home/jenkins/.kube/config"
+        sh "helm version --client"
+        sh "helm version"
+        echo "build tag is ${BUID_TAG}" 
+        sh "helm upgrade --install api-user  $WORKSPACE/apis/userprofile/helm  --namespace default --set repository.image=${env.ACR_ENDPOINT}/jenkins/api-userprofile --set repository.tag=${BUID_TAG} --set rollingUpdate.maxUnavailablePercentage='0%' --set rollingUpdate.maxSurgePercentage='10%' --set env.webServerBaseUri=${dnsUrl} --set ingress.rules.endpoint.host=${dnsUrl}"
+      }
+    }         
 }
 post { 
   always { 

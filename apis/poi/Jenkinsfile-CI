@@ -25,13 +25,19 @@ stages
         sh "docker build -t ${env.ACR_ENDPOINT}/jenkins/api-poi:${BUID_TAG} $WORKSPACE/apis/poi"
       }
     }
-    stage('push')
-    {
+    stage('push') {
       steps
       {
         sh  "docker push ${env.ACR_ENDPOINT}/jenkins/api-poi:${BUID_TAG}"
       }
-    }    
+    }
+
+    stage('Helm Install'){
+        sh "export KUBECONFIG=/home/jenkins/.kube/config"
+        sh "helm version --client"
+        sh "helm version"
+        sh "helm upgrade --install api-poi $WORKSPACE/apis/poi/helm  --namespace default --set repository.image=${ACR_ENDPOINT}/jenkins/api-poi --set repository.tag=${BUILD_TAG} --set rollingUpdate.maxUnavailablePercentage='0%' --set rollingUpdate.maxSurgePercentage='10%' --set env.webServerBaseUri=${dnsUrl} --set ingress.rules.endpoint.host=${dnsUrl}"
+    }        
 }
 
 post { 

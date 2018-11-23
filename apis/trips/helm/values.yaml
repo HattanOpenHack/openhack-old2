@@ -20,7 +20,7 @@ ingress:
     kubernetes.io/ingress.class: traefik
   rules:
     endpoint:
-      host: changeme
+      host: openhackff78aks.eastus.cloudapp.azure.com
       paths:
       - path: /api/trips
         serviceName: api-trip-svc

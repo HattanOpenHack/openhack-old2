@@ -9,7 +9,7 @@ RUN dotnet restore
 COPY . ./
 
 # publish
-RUN dotnet publish -c Release -o out
+RUN dotnet publish -c Release -o /app/out
 COPY ./web/appsettings.*.json /app/out/
 COPY ./web/appsettings.json /app/out/
 
